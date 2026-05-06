@@ -21,7 +21,7 @@ services:
     container_name: spmb_web
     restart: unless-stopped
     ports:
-      - "8000:80"
+      - "8002:80"
     volumes:
       - ./backend:/var/www
       - ./nginx/conf.d:/etc/nginx/conf.d/
