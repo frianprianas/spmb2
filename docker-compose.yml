@@ -15,6 +15,7 @@ services:
       - ./backend/.env
     volumes:
       - ./backend/storage:/var/www/storage
+      - ./backend/.env:/var/www/.env
     networks:
       - spmb-network
 
