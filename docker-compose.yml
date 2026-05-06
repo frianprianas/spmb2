@@ -10,21 +10,21 @@ services:
     container_name: spmb_app
     restart: unless-stopped
     working_dir: /var/www
+    # Hilangkan volume kode agar tidak menimpa folder vendor di dalam container
     volumes:
-      - ./backend:/var/www
+      - ./backend/storage:/var/www/storage
     networks:
       - spmb-network
 
   # Nginx
   web:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     container_name: spmb_web
     restart: unless-stopped
     ports:
       - "8002:80"
-    volumes:
-      - ./backend:/var/www
-      - ./nginx/conf.d:/etc/nginx/conf.d/
     depends_on:
       - app
     networks:
