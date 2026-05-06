@@ -10,7 +10,9 @@ services:
     container_name: spmb_app
     restart: unless-stopped
     working_dir: /var/www
-    # Hilangkan volume kode agar tidak menimpa folder vendor di dalam container
+    # Meneruskan variabel dari .env lokal ke dalam container
+    env_file:
+      - ./backend/.env
     volumes:
       - ./backend/storage:/var/www/storage
     networks:
