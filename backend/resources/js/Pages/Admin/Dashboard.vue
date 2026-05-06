@@ -92,22 +92,6 @@
     </div>
   </AdminLayout>
 </template>
-          </div>
-        </div>
-
-        <div v-if="stats.per_jurusan && stats.per_jurusan.length > 0" class="mt-6">
-          <h4 class="text-md font-semibold mb-2">Per Jurusan:</h4>
-          <div class="bg-gray-50 rounded-lg p-4">
-            <div v-for="item in stats.per_jurusan" :key="item.nama_jurusan" class="flex justify-between py-2 border-b border-gray-200 last:border-0">
-              <span>{{ item.nama_jurusan }}</span>
-              <span class="font-semibold">{{ item.total }} siswa</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </AdminLayout>
-</template>
 
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
