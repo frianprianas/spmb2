@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Laravel App
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: spmb-app
+    container_name: spmb_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - spmb-network
+
+  # Nginx
+  web:
+    image: nginx:alpine
+    container_name: spmb_web
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d/
+    depends_on:
+      - app
+    networks:
+      - spmb-network
+
+  # PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: spmb_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: spmb_smk
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-buhun666}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - spmb-network
+
+networks:
+  spmb-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
