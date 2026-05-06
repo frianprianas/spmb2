@@ -36,8 +36,17 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev && \
     npm install && \
     npm run build
 
+# Ensure storage and bootstrap/cache directories exist
+RUN mkdir -p /var/www/storage/app/public \
+             /var/www/storage/framework/cache/data \
+             /var/www/storage/framework/sessions \
+             /var/www/storage/framework/views \
+             /var/www/storage/logs \
+             /var/www/bootstrap/cache
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 9000
 CMD ["php-fpm"]
