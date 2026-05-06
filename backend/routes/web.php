@@ -15,8 +15,11 @@ use App\Http\Controllers\Web\StudentDashboardController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('siswa.login');
-});
+    $jurusan = \App\Models\Jurusan::where('is_active', true)->get();
+    return \Inertia\Inertia::render('Home', [
+        'jurusan' => $jurusan
+    ]);
+})->name('home');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
